@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo
+    container_name: mongo-dev
+    ports:
+      - '27017:27017'
+
+  auth-server:
+    build: ./auth-server
+    ports:
+      - '3001:3000'
+    depends_on:
+      - mongo
+
+  event-server:
+    build: ./event-server
+    ports:
+      - '3002:3000'
+    depends_on:
+      - mongo
+
+  # gateway-server:
+  #   build: ./gateway-server
+  #   ports:
+  #     - '3000:3000'
+  #   depends_on:
+  #     - auth-server
+  #     - event-server
