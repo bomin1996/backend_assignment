@@ -20,10 +20,11 @@ services:
     depends_on:
       - mongo
 
-  # gateway-server:
-  #   build: ./gateway-server
-  #   ports:
-  #     - '3000:3000'
-  #   depends_on:
-  #     - auth-server
-  #     - event-server
+  gateway-server:
+    build: ./gateway-server
+    ports:
+      - '3000:3000'
+    depends_on:
+      - auth-server
+      - event-server
+
