@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { RequestService } from './request.service';
 import { CreateRequestDto } from './dto/create-request.dto';
 
@@ -7,17 +7,21 @@ export class RequestController {
     constructor(private readonly requestService: RequestService) {}
 
     @Post()
-    create(@Body() dto: CreateRequestDto) {
-        return this.requestService.create(dto);
+    async create(@Body() dto: CreateRequestDto) {
+        try {
+            return await this.requestService.create(dto);
+        } catch (err) {
+            throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Get()
-    findAll() {
+    async findAll() {
         return this.requestService.findAll();
     }
 
     @Get('user/:userId')
-    findByUser(@Param('userId') userId: string) {
+    async findByUser(@Param('userId') userId: string) {
         return this.requestService.findByUser(userId);
     }
 }

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { RequestController } from './request.controller';
 import { RequestService } from './request.service';
+import { RequestController } from './request.controller';
 import { RewardRequest, RequestSchema } from './schemas/request.schema';
 
 @Module({

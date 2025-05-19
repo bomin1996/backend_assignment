@@ -7,11 +7,12 @@ import { CreateRewardDto } from './dto/create-reward.dto';
 @Injectable()
 export class RewardService {
     constructor(
-        @InjectModel(Reward.name) private rewardModel: Model<RewardDocument>,
+        @InjectModel(Reward.name)
+        private readonly rewardModel: Model<RewardDocument>,
     ) {}
 
     async create(dto: CreateRewardDto): Promise<Reward> {
-        return new this.rewardModel(dto).save();
+        return this.rewardModel.create(dto);
     }
 
     async findAll(): Promise<Reward[]> {

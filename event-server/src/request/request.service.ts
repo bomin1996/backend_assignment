@@ -7,10 +7,21 @@ import { CreateRequestDto } from './dto/create-request.dto';
 @Injectable()
 export class RequestService {
     constructor(
-        @InjectModel(RewardRequest.name) private requestModel: Model<RequestDocument>,
+        @InjectModel(RewardRequest.name)
+        private requestModel: Model<RequestDocument>,
     ) {}
 
     async create(dto: CreateRequestDto): Promise<RewardRequest> {
+        const existing = await this.requestModel.findOne({
+            userId: dto.userId,
+            eventId: dto.eventId,
+            rewardId: dto.rewardId,
+        });
+
+        if (existing) {
+            throw new Error('이미 요청한 보상입니다.');
+        }
+
         return new this.requestModel(dto).save();
     }
 
